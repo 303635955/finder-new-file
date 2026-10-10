@@ -11,6 +11,9 @@ struct CoreSmoke {
         precondition(first.lastPathComponent == "未命名文本文档.txt")
         precondition(second.lastPathComponent == "未命名文本文档 2.txt")
         precondition((try? Data(contentsOf: first))?.isEmpty == true)
+        let filled = try NewFileCore.create(in: directory, name: "新建 JSON 文件", extension: "json", content: Data("{}\n".utf8))
+        let savedContent = try Data(contentsOf: filled)
+        precondition(savedContent == Data("{}\n".utf8))
         print("Core smoke test passed")
     }
 }
