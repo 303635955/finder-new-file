@@ -22,6 +22,8 @@ open dist/新建文件.app
 ```bash
 swiftc Sources/NewFileCore.swift Tests/CoreSmoke.swift -o /tmp/new-file-core-smoke
 /tmp/new-file-core-smoke
+swiftc -parse-as-library Sources/NewFileCore.swift Sources/FinderSync.swift Tests/MenuSmoke.swift -framework AppKit -framework FinderSync -o /tmp/new-file-menu-smoke
+/tmp/new-file-menu-smoke
 ```
 
 此测试覆盖空文件创建、初始内容和重名编号。Finder 菜单出现与桌面行为还需在安装并开启扩展后验证。
