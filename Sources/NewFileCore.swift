@@ -14,7 +14,7 @@ enum NewFileError: LocalizedError {
 }
 
 enum NewFileCore {
-    static func create(in directory: URL, name: String, extension fileExtension: String) throws -> URL {
+    static func create(in directory: URL, name: String, extension fileExtension: String, content: Data = Data()) throws -> URL {
         var isDirectory: ObjCBool = false
         guard directory.isFileURL,
               FileManager.default.fileExists(atPath: directory.path, isDirectory: &isDirectory),
@@ -29,8 +29,15 @@ enum NewFileCore {
                 return open(path, O_WRONLY | O_CREAT | O_EXCL, 0o644)
             }
             if descriptor >= 0 {
-                close(descriptor)
-                return destination
+                do {
+                    let handle = FileHandle(fileDescriptor: descriptor, closeOnDealloc: true)
+                    try handle.write(contentsOf: content)
+                    try handle.close()
+                    return destination
+                } catch {
+                    try? FileManager.default.removeItem(at: destination)
+                    throw error
+                }
             }
             let code = errno
             if code != EEXIST { throw NewFileError.cannotCreate(code) }
