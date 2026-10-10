@@ -30,10 +30,10 @@ final class App: NSObject, NSApplicationDelegate {
         let title = NSTextField(labelWithString: "在 Finder 中右键新建文件")
         title.font = .boldSystemFont(ofSize: 20)
         let instructions = NSTextField(wrappingLabelWithString:
-            "安装到“应用程序”后，在系统设置 → 通用 → 登录项与扩展 → Finder 扩展中开启“新建文件”。然后在桌面或 Finder 文件夹空白处右键，选择新建文本文档或 Markdown 文档。")
+            "安装到“应用程序”后，在系统设置 → 通用 → 登录项与扩展 → Finder 扩展中开启“新建文件”。然后在桌面或 Finder 文件夹空白处右键，打开“新建文件”菜单并选择文件类型。")
         instructions.font = .systemFont(ofSize: 14)
         let note = NSTextField(wrappingLabelWithString:
-            "如果右键菜单在 iCloud 云盘中未出现，可在 Finder 的“显示 → 自定工具栏”添加“新建文件”按钮。")
+            "iCloud 云盘可能隐藏 Finder 扩展的右键菜单。Finder 文件夹可使用工具栏按钮；iCloud 桌面可安装源码附带的快捷操作。")
         note.textColor = .secondaryLabelColor
         note.font = .systemFont(ofSize: 12)
         let button = NSButton(title: "打开扩展设置", target: self, action: #selector(openSettings))
