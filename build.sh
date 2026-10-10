@@ -7,7 +7,11 @@ app="$destination/新建文件.app"
 extension="$app/Contents/PlugIns/NewFileExtension.appex"
 target="$(uname -m)-apple-macos14.0"
 
-mkdir -p "$app/Contents/MacOS" "$extension/Contents/MacOS"
+mkdir -p "$app/Contents/MacOS" "$extension/Contents/MacOS" "$extension/Contents/Resources/Templates"
+for encoded in "$project_dir"/Templates/*.b64; do
+  filename="$(basename "$encoded" .b64)"
+  /usr/bin/base64 -D -i "$encoded" -o "$extension/Contents/Resources/Templates/$filename"
+done
 
 cat > "$destination/extension.entitlements" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
